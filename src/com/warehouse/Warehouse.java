@@ -31,7 +31,9 @@ public class Warehouse implements IWarehouse{
 
         for (Map.Entry<Integer, Material> item: repo.entrySet()
         ) {
-            report.append(String.format("ID %d Наименование %s %s", item.getKey(), item.getValue().getName(), System.lineSeparator()));
+            report.append(String.format("ID %d Наименование %s Количество: %d %s %s",
+                    item.getKey(), item.getValue().getName(), item.getValue().getCount(), item.getValue().getUnit(),
+                    System.lineSeparator()));
         }
         return report.toString();
     }
