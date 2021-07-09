@@ -61,11 +61,11 @@ public class Material {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(name.toLowerCase(), material.name.toLowerCase());
+        return this.name.equalsIgnoreCase(material.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, count, unit, square);
+        return Objects.hash(name.toLowerCase());
     }
 }
