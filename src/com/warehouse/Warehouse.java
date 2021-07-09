@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class Warehouse implements IWarehouse{
     private int materials_count = 0;
-    private int square = 0;
-    private int free_square = 0;
+    private int square;
+    private int free_square;
     private int last_Id = 0;
     private Map<Integer, Material> repo;
 
@@ -24,17 +24,13 @@ public class Warehouse implements IWarehouse{
     }
 
     @Override
-    public String fulReport() {
+    public String fullReport() {
         StringBuilder report = new StringBuilder();
-        report.append(this.toString());
-        report.append(System.lineSeparator());
-
         for (Map.Entry<Integer, Material> item: repo.entrySet()
         ) {
-            report.append(String.format("ID %d Наименование %s Количество: %d %s %s",
-                    item.getKey(), item.getValue().getName(), item.getValue().getCount(), item.getValue().getUnit(),
-                    System.lineSeparator()));
+            report.append(String.format("%s %s",item.toString(), System.lineSeparator()));
         }
+        report.append(this);
         return report.toString();
     }
 

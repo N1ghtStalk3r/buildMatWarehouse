@@ -6,11 +6,13 @@ public class Material {
     private String name;
     private int count;
     private String unit;
+    private int square;
 
-    Material(String name, int count, String unit) {
+    Material(String name, int count, int square, String unit) {
         this.name = name;
         this.count = count;
         this.unit = unit;
+        this.square = square;
     }
 
     String getName() {
@@ -41,9 +43,17 @@ public class Material {
         count = count + value;
     }
 
+    int getSquare(){
+        return square;
+    }
+
+    void changeSquare(int value) {
+        square = square + value;
+    }
+
     @Override
     public String toString() {
-        return String.format("%s количество %d %s", name, count, unit);
+        return String.format("%s - количество %d %s площадь на складе %d" , name, count, unit, square);
     }
 
     @Override
@@ -56,6 +66,6 @@ public class Material {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, count, unit);
+        return Objects.hash(name, count, unit, square);
     }
 }
