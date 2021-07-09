@@ -19,7 +19,7 @@ public class Warehouse implements IWarehouse{
     @Override
     public String toString() {
 
-        return String.format("Склад: Площадь - %d кв. м. Свободная площадь - %d Наименований: %d Едениц: %d",
+        return String.format("Склад: Площадь - %d кв. м. Свободная площадь - %d Наименований: %d Единиц: %d",
                             square, free_square, repo.size(), materials_count);
     }
 
