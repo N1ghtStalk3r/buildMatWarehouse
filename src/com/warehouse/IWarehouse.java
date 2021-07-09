@@ -6,4 +6,5 @@ public interface IWarehouse {
     void Delete(int Id);
     String fullReport();
     int getMaterialsCount();
+    boolean Contains(Material material);
 }

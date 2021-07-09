@@ -50,4 +50,14 @@ public class Warehouse implements IWarehouse{
     public int getMaterialsCount() {
         return materials_count;
     }
+
+    @Override
+    public boolean Contains(Material material) {
+
+        for (Map.Entry<Integer, Material> item: repo.entrySet()
+             ) {
+            if (item.getValue().equals(material)) return true;
+        }
+        return false;
+    }
 }
