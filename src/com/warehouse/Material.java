@@ -53,7 +53,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return String.format("%s - количество %d %s площадь на складе %d" , name, count, unit, square);
+        return String.format("%s - количество %d %s площадь %d" , name, count, unit, square);
     }
 
     @Override
