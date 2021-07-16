@@ -7,14 +7,26 @@ public class Material {
     private int count;
     private String unit;
     private int square;
+    private float price;
+    static String format_string = "|%-10s||%-50s||%10d||%5s||%15.2f||%20.2f||%15d|";
+    private Integer Id;
 
-    Material(String name, int count, int square, String unit) {
+    Material(Integer Id, String name, int count, int square, String unit, float price) {
         this.name = name;
         this.count = count;
         this.unit = unit;
         this.square = square;
+        this.price = price;
+        this.Id = Id;
     }
 
+    Integer getId() {
+        return Id;
+    }
+
+    void setId(Integer new_Id) {
+        this.Id = new_Id;
+    }
     String getName() {
         return name;
     }
@@ -51,9 +63,21 @@ public class Material {
         square = square + value;
     }
 
+    void setSquare(int new_square) {
+        this.square = new_square;
+    }
+
+    float getPrice(){ return price; }
+
+    void setPrice(float new_price) {
+        this.price = new_price;
+    }
+
+    float getCost() {return count * price;}
+
     @Override
     public String toString() {
-        return String.format("%s - количество %d %s площадь %d" , name, count, unit, square);
+        return String.format(format_string, Id, name, count, unit, price, price * count, square);
     }
 
     @Override
@@ -61,11 +85,11 @@ public class Material {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return this.name.equalsIgnoreCase(material.getName());
+        return (this.name.equalsIgnoreCase(material.getName()) & (this.price == material.getPrice()));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name.toLowerCase());
+        return Objects.hash(name.toLowerCase(), price);
     }
 }
