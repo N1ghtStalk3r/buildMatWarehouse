@@ -8,16 +8,25 @@ public class Material {
     private String unit;
     private int square;
     private float price;
-    static String format_string = "|%-50s||%10d||%5s||%15.2f||%20.2f||%15d|";
+    static String format_string = "|%-10s||%-50s||%10d||%5s||%15.2f||%20.2f||%15d|";
+    private Integer Id;
 
-    Material(String name, int count, int square, String unit, float price) {
+    Material(Integer Id, String name, int count, int square, String unit, float price) {
         this.name = name;
         this.count = count;
         this.unit = unit;
         this.square = square;
         this.price = price;
+        this.Id = Id;
     }
 
+    Integer getId() {
+        return Id;
+    }
+
+    void setId(Integer new_Id) {
+        this.Id = new_Id;
+    }
     String getName() {
         return name;
     }
@@ -68,8 +77,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return String.format(format_string,
-                                name, count, unit, price, price * count, square);
+        return String.format(format_string, Id, name, count, unit, price, price * count, square);
     }
 
     @Override

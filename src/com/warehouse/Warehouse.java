@@ -1,6 +1,7 @@
 package com.warehouse;
 
 import java.util.Map;
+import java.util.Set;
 
 public class Warehouse implements IWarehouse{
     private int materials_count = 0;
@@ -8,6 +9,7 @@ public class Warehouse implements IWarehouse{
     private int free_square;
     private float full_cost;
     private int last_Id = 0;
+    static String format_string = "|%-10s||%-50s||%10s||%5s||%15s||%20s||%15s|";
     private Map<Integer, Material> repo;
 
     Warehouse(Map<Integer, Material> repo, int square)
@@ -26,42 +28,27 @@ public class Warehouse implements IWarehouse{
     }
 
     @Override
-    public String getReport(String check_name) {
-        int sum_square = 0;
-        int sum_count = 0;
-        float sum_cost = 0;
-        Integer current_count = 0;
-        StringBuilder report = new StringBuilder();
-        report.append(String.format("|%-10s||%-50s||%10s||%5s||%15s||%20s||%15s|%s",
-                "Код", "Наименование", "Кол-во", "ед.", "Цена руб.", "Стоимость руб.", "Площадь кв. м.", System.lineSeparator()));
-        for (Map.Entry<Integer, Material> item: repo.entrySet()
-        ) {
-            if (item.getValue().getName().toLowerCase().contains(check_name)) {
-                sum_cost += item.getValue().getCost();
-                sum_count += item.getValue().getCount();
-                sum_square += item.getValue().getSquare();
-                current_count++;
-                report.append(String.format("|%-10d|%s%s",item.getKey(), item.getValue().toString(), System.lineSeparator()));
-            }
-        }
-        report.append(System.lineSeparator());
-        report.append(String.format("|%-10s|","Итого"));
-        report.append(String.format(Material.format_string, current_count, sum_count,"", 0f, sum_cost, sum_square));
-        return report.toString();
-    }
-
-    @Override
     public int Add(Material material) {
-        last_Id++;
-        repo.put(last_Id, material);
-        free_square -= material.getSquare();
-        materials_count += material.getCount();
-        full_cost += material.getCost();
-        return last_Id;
+        if (material != null) {
+            material.setId(++last_Id);
+            repo.put(last_Id, material);
+            free_square -= material.getSquare();
+            materials_count += material.getCount();
+            full_cost += material.getCost();
+            return last_Id;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     @Override
     public void Delete(int Id) {
+        Material material = getMaterial(Id);
+        materials_count -= material.getCount();
+        free_square += material.getSquare();
+        full_cost -= material.getCost();
         repo.remove(Id);
     }
 
@@ -80,4 +67,23 @@ public class Warehouse implements IWarehouse{
         return false;
     }
 
+    @Override
+    public Set<Integer> getId_list() {
+        return repo.keySet();
+    }
+
+    @Override
+    public Material getMaterial(Integer Id) {
+        return repo.get(Id);
+    }
+
+    @Override
+    public int getFree_square() {
+        return free_square;
+    }
+
+    @Override
+    public String getFormat_string() {
+        return format_string;
+    }
 }
