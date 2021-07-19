@@ -18,9 +18,7 @@ public class Material {
     }
 
     void setName(String new_name) {
-        if (!new_name.isEmpty()) {
-            name = new_name;
-        }
+          name = new_name;
     }
 
     String getUnit() {
@@ -28,9 +26,7 @@ public class Material {
     }
 
     void setUnit(String new_unit) {
-        if (!new_unit.isEmpty()) {
-            unit = new_unit;
-        }
+          unit = new_unit;
     }
 
     float getPrice(){ return price; }
