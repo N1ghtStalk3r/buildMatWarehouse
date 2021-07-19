@@ -4,27 +4,15 @@ import java.util.Objects;
 
 public class Material {
     private String name;
-    private int count;
     private String unit;
     private float price;
-    static String format_string = "|%-10s||%-50s||%10d||%5s||%15.2f||%20.2f||%15d|";
-    private Integer Id;
 
-    Material(Integer Id, String name, int count, String unit, float price) {
+    Material(String name, String unit, float price) {
         this.name = name;
-        this.count = count;
         this.unit = unit;
         this.price = price;
-        this.Id = Id;
     }
 
-    Integer getId() {
-        return Id;
-    }
-
-    void setId(Integer new_Id) {
-        this.Id = new_Id;
-    }
     String getName() {
         return name;
     }
@@ -45,25 +33,10 @@ public class Material {
         }
     }
 
-    int getCount() {
-        return count;
-    }
-
-    void changeCount(int value) {
-        count = count + value;
-    }
-
     float getPrice(){ return price; }
 
     void setPrice(float new_price) {
         this.price = new_price;
-    }
-
-    float getCost() {return count * price;}
-
-    @Override
-    public String toString() {
-        return String.format(format_string, Id, name, count, unit, price, price * count);
     }
 
     @Override

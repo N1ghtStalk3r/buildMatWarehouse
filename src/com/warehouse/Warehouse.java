@@ -1,5 +1,6 @@
 package com.warehouse;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +10,6 @@ public class Warehouse implements IWarehouse{
     private int free_square;
     private float full_cost;
     private int last_Id = 0;
-    static String format_string = "|%-10s||%-50s||%10s||%5s||%15s||%20s||%15s|";
     private Map<Integer, Warehouse_record> repo;
 
     Warehouse(Map<Integer, Warehouse_record> repo, int square)
@@ -23,16 +23,12 @@ public class Warehouse implements IWarehouse{
     @Override
     public String toString() {
 
-        return String.format("Площадь: %d кв. м. Свободная площадь: %d Наименований: %d ед.: %d Общая стоимость: %15.2f руб.",
+        return String.format("Площадь: %d кв. м. Свободная площадь: %d Наименований: %d Единиц на складе: %d Общая стоимость: %15.2f руб.",
                             square, free_square, repo.size(), materials_count, full_cost);
     }
 
     @Override
-    public int Add(Warehouse_record record) throws Exception {
-        String testRecord_string = testRecord(record);
-        if (!testRecord_string.isEmpty()) {
-            new Exception(testRecord_string);
-        }
+    public int add(Warehouse_record record) {
         record.setId(++last_Id);
         repo.put(last_Id, record);
         materials_count += record.getCount();
@@ -42,27 +38,21 @@ public class Warehouse implements IWarehouse{
     }
 
     @Override
-    public void Delete(int Id) {
-        Warehouse_record record = getRecord(Id);
+    public void delete(Warehouse_record record) {
         materials_count -= record.getCount();
         full_cost -= record.getCost();
         free_square += record.getSquare();
-        repo.remove(Id);
+        repo.remove(record.getId());
     }
 
     @Override
-    public int getMaterialsCount() {
+    public int count() {
+        return repo.size();
+    }
+
+    @Override
+    public int materialsCount() {
         return materials_count;
-    }
-
-    @Override
-    public boolean Contains(Material material) {
-
-        for (Map.Entry<Integer, Warehouse_record> item: repo.entrySet()
-             ) {
-            if (item.getValue().checkMaterial(material)) return true;
-        }
-        return false;
     }
 
     @Override
@@ -80,22 +70,4 @@ public class Warehouse implements IWarehouse{
         return free_square;
     }
 
-    @Override
-    public String getFormat_string() {
-        return format_string;
-    }
-
-    String testRecord(Warehouse_record record)
-    {
-        if (record == null) {
-            return "Не задана складская запись ";
-        }
-        if (record.getCount() < 1) {
-            return "Количество товара меньше 1";
-        }
-        if (record.getSquare() < 1) {
-            return "Площадь меньше 1";
-        };
-        return "";
-    }
 }

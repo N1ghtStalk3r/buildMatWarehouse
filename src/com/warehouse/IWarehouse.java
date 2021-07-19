@@ -4,12 +4,11 @@ import java.util.Set;
 
 public interface IWarehouse {
 
-    int Add(Warehouse_record record) throws Exception;
-    void Delete(int Id);
-    int getMaterialsCount();
-    boolean Contains(Material material);
+    int add(Warehouse_record record);
+    void delete(Warehouse_record record);
+    int count();
+    int materialsCount();
     Set<Integer> getId_list();
     Warehouse_record getRecord(Integer Id);
     int getFree_square();
-    String getFormat_string();
 }
