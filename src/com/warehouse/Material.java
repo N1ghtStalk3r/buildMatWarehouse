@@ -6,16 +6,14 @@ public class Material {
     private String name;
     private int count;
     private String unit;
-    private int square;
     private float price;
     static String format_string = "|%-10s||%-50s||%10d||%5s||%15.2f||%20.2f||%15d|";
     private Integer Id;
 
-    Material(Integer Id, String name, int count, int square, String unit, float price) {
+    Material(Integer Id, String name, int count, String unit, float price) {
         this.name = name;
         this.count = count;
         this.unit = unit;
-        this.square = square;
         this.price = price;
         this.Id = Id;
     }
@@ -55,18 +53,6 @@ public class Material {
         count = count + value;
     }
 
-    int getSquare(){
-        return square;
-    }
-
-    void changeSquare(int value) {
-        square = square + value;
-    }
-
-    void setSquare(int new_square) {
-        this.square = new_square;
-    }
-
     float getPrice(){ return price; }
 
     void setPrice(float new_price) {
@@ -77,7 +63,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return String.format(format_string, Id, name, count, unit, price, price * count, square);
+        return String.format(format_string, Id, name, count, unit, price, price * count);
     }
 
     @Override
