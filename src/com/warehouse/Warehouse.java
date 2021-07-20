@@ -12,11 +12,11 @@ public class Warehouse implements IWarehouse{
     private int last_Id = 0;
     private Map<Integer, Warehouse_record> repo;
 
-    Warehouse(Map<Integer, Warehouse_record> repo, int square)
+    Warehouse(int square)
     {
         this.square = square;
         this.free_square = square;
-        this.repo = repo;
+        this.repo = new HashMap<>();
         this.full_cost = 0;
     }
 
@@ -29,12 +29,13 @@ public class Warehouse implements IWarehouse{
 
     @Override
     public int add(Warehouse_record record) {
-        record.setId(++last_Id);
-        repo.put(last_Id, record);
+        int record_Id = record.getId();
+        if (record_Id == 0) record_Id = ++last_Id;
+        repo.put(record_Id, record);
         materials_count += record.getCount();
         full_cost += record.getCost();
-        free_square -= record.getSquare();
-        return last_Id;
+        free_square = free_square - record.getSquare();
+        return record_Id;
     }
 
     @Override
@@ -70,4 +71,13 @@ public class Warehouse implements IWarehouse{
         return free_square;
     }
 
+    @Override
+    public boolean containsRecord(Warehouse_record record) {
+        return repo.containsValue(record);
+    }
+
+    @Override
+    public boolean containsId(Integer Id) {
+        return repo.containsKey(Id);
+    }
 }
