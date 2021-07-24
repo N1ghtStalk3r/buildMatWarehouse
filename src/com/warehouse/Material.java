@@ -40,11 +40,11 @@ public class Material {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return (this.name.equalsIgnoreCase(material.getName()) & (this.price == material.getPrice()));
+        return (this.name.equalsIgnoreCase(material.getName()) && (this.price == material.getPrice()) && (this.unit.equalsIgnoreCase(material.getUnit())));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name.toLowerCase(), price);
+        return Objects.hash(name.toLowerCase(), price, unit);
     }
 }

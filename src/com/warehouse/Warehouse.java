@@ -8,8 +8,7 @@ public class Warehouse implements IWarehouse{
     private int materials_count = 0;
     private int square;
     private int free_square;
-    private float full_cost;
-    private int last_Id = 0;
+    private float full_cost = 0;
     private Map<Integer, Warehouse_record> repo;
 
     Warehouse(int square)
@@ -17,7 +16,6 @@ public class Warehouse implements IWarehouse{
         this.square = square;
         this.free_square = square;
         this.repo = new HashMap<>();
-        this.full_cost = 0;
     }
 
     @Override
@@ -28,22 +26,29 @@ public class Warehouse implements IWarehouse{
     }
 
     @Override
-    public int add(Warehouse_record record) {
-        int record_Id = record.getId();
-        if (record_Id == 0) record_Id = ++last_Id;
-        repo.put(record_Id, record);
+    public void add(Warehouse_record record) {
+        repo.put(record.getId(), record);
         materials_count += record.getCount();
         full_cost += record.getCost();
         free_square = free_square - record.getSquare();
-        return record_Id;
     }
 
     @Override
     public void delete(Warehouse_record record) {
+        repo.remove(record.getId());
         materials_count -= record.getCount();
         full_cost -= record.getCost();
         free_square += record.getSquare();
-        repo.remove(record.getId());
+    }
+
+    @Override
+    public void update(Warehouse_record record) {
+        Warehouse_record update_record = repo.get(record.getId());
+        materials_count = materials_count - update_record.getCount() + record.getCount();
+        full_cost = full_cost - update_record.getCost() + record.getCost();
+        free_square = free_square - update_record.getSquare() + record.getSquare();
+        update_record.setCount(record.getCount());
+        update_record.setSquare(record.getSquare());
     }
 
     @Override
@@ -62,8 +67,8 @@ public class Warehouse implements IWarehouse{
     }
 
     @Override
-    public Warehouse_record getRecord(Integer Id) {
-        return repo.get(Id);
+    public Warehouse_record_info getRecord(Integer Id) {
+        return new Warehouse_record_info(repo.get(Id));
     }
 
     @Override
@@ -79,5 +84,13 @@ public class Warehouse implements IWarehouse{
     @Override
     public boolean containsId(Integer Id) {
         return repo.containsKey(Id);
+    }
+
+    @Override
+    public void clear() {
+        repo = new HashMap<>();
+        materials_count = 0;
+        free_square = square;
+        full_cost = 0;
     }
 }

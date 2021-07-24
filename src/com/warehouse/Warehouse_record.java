@@ -42,12 +42,8 @@ class Warehouse_record{
         count = new_count;
     }
 
-    String getName() {
-        return material.getName();
-    }
-
-    void setName(String new_name) {
-        material.setName(new_name);
+    Material getMaterial() {
+        return material;
     }
 
     @Override

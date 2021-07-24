@@ -11,8 +11,7 @@ public class Main {
         Material m1 = new Material("m1", "t", 200);
         Material m2 = new Material("m1", "kg", 200);
         Warehouse_record record1 = new Warehouse_record(m1, 1, 20,20);
-        Warehouse_record record2 = new Warehouse_record(m2, 1, 20,20);
         wh.add(record1);
-        System.out.println(wh.containsRecord(record2));
+        System.out.println(wh.getRecord(1).getCount());
     }
 }
